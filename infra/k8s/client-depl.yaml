@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: shanbiswas/ticketing-app/client #us.gcr.io/ticketing-dev-410104/client
+        image: shanbiswas/ticketing-app-client #us.gcr.io/ticketing-dev-410104/client
         resources:
           limits:
             memory: "512Mi"
