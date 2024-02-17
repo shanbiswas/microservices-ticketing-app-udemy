@@ -1,6 +1,5 @@
 import express from 'express';
-import { currentUser } from '../middlewares/current-user';
-import { requireAuth } from '../middlewares/require-auth';
+import { currentUser, requireAuth } from '@sbticketingudemy/ticketing-udemy-common';
 
 const router = express.Router();
 
