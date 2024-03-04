@@ -16,6 +16,14 @@ spec:
       - name: tickets
         image: shanbiswas/ticketing-app-tickets #us.gcr.io/ticketing-dev-410104/tickets
         env:
+          - name: NATS_CLIENT_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name    # this will give unique client id
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+          - name: NATS_CLUSTER_ID
+            value: 'ticketing'
           - name: MONGO_URI
             value: 'mongodb://tickets-mongo-srv:27017/ticketing-tickets'
           - name: JWT_KEY
