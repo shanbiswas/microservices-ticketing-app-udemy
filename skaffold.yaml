@@ -27,6 +27,14 @@ build:
         manual:
           - dest: .
             src: 'src/**/*.ts'
+    - image: shanbiswas/ticketing-app-orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'
   local:  # this is telling not to push the images to docker hub when a change is done, this is not req when using skaffold
     push: false
   # googleCloudBuild:
