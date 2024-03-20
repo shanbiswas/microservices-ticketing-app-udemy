@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: orders-depl
+  name: expiration-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: orders
+      app: expiration
   template:
     metadata:
       labels:
-        app: orders
+        app: expiration
     spec:
       containers:
-      - name: orders
-        image: shanbiswas/ticketing-app-orders #us.gcr.io/ticketing-dev-410104/orders
+      - name: expiration
+        image: shanbiswas/ticketing-app-expiration #us.gcr.io/ticketing-dev-410104/expiration
         env:
           - name: NATS_CLIENT_ID
             valueFrom:
@@ -24,29 +24,12 @@ spec:
             value: 'http://nats-srv:4222'
           - name: NATS_CLUSTER_ID
             value: ticketing
-          - name: MONGO_URI
-            value: 'mongodb://orders-mongo-srv:27017/ticketing-orders'
-          - name: JWT_KEY
-            valueFrom:
-              secretKeyRef:
-                name: jwt-secret
-                key: JWT_KEY
+          - name: REDIS_HOST
+            value: expiration-redis-srv
         resources:
           limits:
             memory: "512Mi"
             cpu: "500m"
         # ports:
         # - containerPort: <Port>
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: orders-srv
-spec:
-  selector:
-    app: orders
-  ports:
-  - name: orders
-    protocol: TCP
-    port: 3000
-    targetPort: 3000
+
