@@ -2,6 +2,7 @@ import express from 'express';
 
 import { errorHandler, NotFoundError, currentUser } from '@sbticketingudemy/ticketing-udemy-common';
 import cookieSession from 'cookie-session';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);
@@ -15,6 +16,8 @@ app.use(
 );
 
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.all('*', async (req, res, next) => {
   next(new NotFoundError());
