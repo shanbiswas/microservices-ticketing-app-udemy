@@ -6,32 +6,35 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
       <Header currentUser={currentUser} />
-      <Component {...pageProps} />
+      <div className="container">
+        <Component currentUser={currentUser} {...pageProps} />
+      </div>
     </div>
   );
 };
 
-AppComponent.getInitialProps = async appContext => {
+AppComponent.getInitialProps = async (appContext) => {
   const client = buildClient(appContext.ctx);
-  let currentUserData = {};
-  try {
-    const { data } = await client.get('/api/users/currentuser'); 
-    currentUserData = data;
-  } catch (error) {
-    console.log('Not autheticated');
-  }
   
+  try {
+    const { data } = await client.get('/api/users/currentuser');
 
-  let pageProps = {};
-  if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+    let pageProps = {};
+    if (appContext.Component.getInitialProps) {
+      pageProps = await appContext.Component.getInitialProps(
+        appContext.ctx,
+        client,
+        data.currentUser
+      );
+    }
+  
+    return {
+      pageProps,
+      ...data,
+    }; 
+  } catch (error) {
+    return {}
   }
-
-  return {
-    pageProps,
-    // ...data
-    ...currentUserData
-  };
 };
 
 export default AppComponent;
