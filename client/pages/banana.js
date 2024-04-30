@@ -1,3 +1,5 @@
-export default () => {
-  return <h1>Banana</h1>;
+import React from "react";
+
+export default Banana = () => {
+  return <h1 data-test-id="banana">Banana</h1>;
 };
