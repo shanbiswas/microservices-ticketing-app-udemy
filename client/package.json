@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "test": "jest --watchAll --no-cache --env=jsdom",
+    "test": "jest --watchAll --no-cache",
     "test:ci": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "keywords": [],
   "author": "",
